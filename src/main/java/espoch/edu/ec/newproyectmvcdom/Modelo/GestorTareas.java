@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package espoch.edu.ec.newproyectmvcdom.Modelo;
 
 /**
@@ -9,5 +6,16 @@ package espoch.edu.ec.newproyectmvcdom.Modelo;
  * @author and_j
  */
 public class GestorTareas {
-    
+    public  String AgregarTareas(Tarea tareas){
+    return "";
+    }
+    public String ListarTareasPendientes(){
+    return "";
+    }
+    public String ListarTareasCompletadas(){
+    return "";
+    }
+    public String MarcarComoCompletada(int id){
+    return "";
+    }
 }

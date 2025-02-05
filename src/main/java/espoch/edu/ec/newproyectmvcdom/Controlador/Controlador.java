@@ -7,4 +7,5 @@ package espoch.edu.ec.newproyectmvcdom.Controlador;
  */
 public class Controlador {
     
+    
 }
