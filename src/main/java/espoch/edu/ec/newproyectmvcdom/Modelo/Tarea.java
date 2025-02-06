@@ -11,11 +11,15 @@ public class Tarea {
     private String descripcion;
     private boolean Completada;
 
-    public Tarea(int id, String titulo, String descripcion, boolean Completada) {
+    public Tarea(int id, String titulo, String descripcion) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.Completada = Completada;
+    }
+
+    public Tarea(int i, String estudiar_Java, String revisar_patrones_de_diseño, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getId() {
@@ -49,7 +53,13 @@ public class Tarea {
     public void setCompletada(boolean Completada) {
         this.Completada = Completada;
     }
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Tarea{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", completada=" + Completada +
+                '}';
+    }
 }
