@@ -1,18 +1,130 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package espoch.edu.ec.newproyectmvcdom.Vista;
 
-/**
- *
- * @author and_j
- */
+package espoch.edu.ec.newproyectmvcdom.Vista;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Vista extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Vista
-     */
+    public class Tarea {
+    private int id;
+    private String titulo;
+    private String descripcion;
+    private boolean completada;
+
+    public Tarea(int id, String titulo, String descripcion) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.completada = false;
+    }
+
+    public void marcarCompletada() {
+        this.completada = true;
+    }
+
+    public boolean isCompletada() {
+        return completada;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + (completada ? "Completada" : "Pendiente") + "] " + titulo + ": " + descripcion;
+    }
+
+    public int getId() {
+        return id;
+    }
+    
+   
+
+public class GestorTareas {
+    private List<Tarea> tareas;
+    private int contadorId;
+
+    public GestorTareas() {
+        tareas = new ArrayList<>();
+        contadorId = 1;
+    }
+
+    public void agregarTarea(String titulo, String descripcion) {
+        Tarea nuevaTarea = new Tarea(contadorId++, titulo, descripcion);
+        tareas.add(nuevaTarea);
+        System.out.println("Tarea agregada con éxito.");
+    }
+
+    public void listarTareasPendientes() {
+        System.out.println("Tareas Pendientes:");
+        for (Tarea tarea : tareas) {
+            if (!tarea.isCompletada()) {
+                System.out.println(tarea);
+            }
+        }
+    }
+
+    public void listarTareasCompletadas() {
+        System.out.println("Tareas Completadas:");
+        for (Tarea tarea : tareas) {
+            if (tarea.isCompletada()) {
+                System.out.println(tarea);
+            }
+        }
+    }
+
+    public void marcarTareaCompletada(int id) {
+        for (Tarea tarea : tareas) {
+            if (tarea.getId() == id) {
+                tarea.marcarCompletada();
+                System.out.println("Tarea marcada como completada.");
+                return;
+            }
+        }
+        System.out.println("Tarea no encontrada.");
+    }
+}
+
+
+public class GestorTareas {
+    public GestorTareas() {
+    GestorTareas gestor = new GestorTareas();
+
+        while (true) {
+            System.out.println("\nMenú:");
+            System.out.println("1. Agregar nueva tarea");
+            System.out.println("2. Listar tareas pendientes");
+            System.out.println("3. Listar tareas completadas");
+            System.out.println("4. Salir");
+
+            System.out.print("Seleccione una opción: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese el título de la tarea: ");
+                    String titulo = scanner.nextLine();
+                    System.out.print("Ingrese la descripción de la tarea: ");
+                    String descripcion = scanner.nextLine();
+                    gestor.agregarTarea(titulo, descripcion);
+                    break;
+                case 2:
+                    gestor.listarTareasPendientes();
+                    break;
+                case 3:
+                    gestor.listarTareasCompletadas();
+                    break;
+                case 4:
+                    System.out.println("Saliendo del programa.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
+        }
+    }
+}
+}
+    
     public Vista() {
         initComponents();
     }
@@ -26,21 +138,164 @@ public class Vista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btg = new javax.swing.ButtonGroup();
+        BTG = new javax.swing.ButtonGroup();
+        lblSistemaTareas = new javax.swing.JLabel();
+        lblid = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        lblDescripcion = new javax.swing.JLabel();
+        lblCompleto = new javax.swing.JLabel();
+        txtIdentificador = new javax.swing.JTextField();
+        txtTituloTarea = new javax.swing.JTextField();
+        txtDescripcionTarea = new javax.swing.JTextField();
+        rbdSI = new javax.swing.JRadioButton();
+        rbdNO = new javax.swing.JRadioButton();
+        rbdNuevaTarea = new javax.swing.JRadioButton();
+        rbdListarPendientes = new javax.swing.JRadioButton();
+        rbdListarCompletadas = new javax.swing.JRadioButton();
+        btnRegistro = new javax.swing.JButton();
+        btnSalida = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblSistemaTareas.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblSistemaTareas.setForeground(new java.awt.Color(102, 0, 102));
+        lblSistemaTareas.setText("SISTEMA BASICO DE GESTION DE TAREAS");
+
+        lblid.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        lblid.setText("Id");
+
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        lblTitulo.setText("Titulo");
+
+        lblDescripcion.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        lblDescripcion.setText("Descripcion");
+
+        lblCompleto.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        lblCompleto.setText("Completada");
+
+        BTG.add(rbdSI);
+        rbdSI.setForeground(new java.awt.Color(153, 0, 0));
+        rbdSI.setText("SI");
+
+        BTG.add(rbdNO);
+        rbdNO.setForeground(new java.awt.Color(0, 0, 153));
+        rbdNO.setText("NO");
+
+        BTG.add(rbdNuevaTarea);
+        rbdNuevaTarea.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        rbdNuevaTarea.setText("Agregar nueva tarea");
+
+        BTG.add(rbdListarPendientes);
+        rbdListarPendientes.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        rbdListarPendientes.setText("Listar tareas pendientes");
+        rbdListarPendientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbdListarPendientesActionPerformed(evt);
+            }
+        });
+
+        BTG.add(rbdListarCompletadas);
+        rbdListarCompletadas.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        rbdListarCompletadas.setText("Listar tareas completadas");
+
+        btnRegistro.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        btnRegistro.setForeground(new java.awt.Color(0, 204, 51));
+        btnRegistro.setText("REGISTAR");
+
+        btnSalida.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        btnSalida.setForeground(new java.awt.Color(102, 0, 0));
+        btnSalida.setText("SALIR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                            .addComponent(lblDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtDescripcionTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(rbdNO, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(rbdSI, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(rbdListarCompletadas)))
+                                .addGap(5, 5, 5))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTituloTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtIdentificador, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rbdNuevaTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(rbdListarPendientes, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(lblSistemaTareas))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(209, 209, 209)
+                                .addComponent(btnRegistro))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(218, 218, 218)
+                                .addComponent(btnSalida)))
+                        .addGap(0, 24, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblSistemaTareas)
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblid)
+                    .addComponent(txtIdentificador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(txtTituloTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbdNuevaTarea))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescripcion)
+                    .addComponent(txtDescripcionTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbdListarPendientes))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCompleto)
+                    .addComponent(rbdSI)
+                    .addComponent(rbdListarCompletadas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbdNO)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegistro)
+                .addGap(27, 27, 27)
+                .addComponent(btnSalida)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rbdListarPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbdListarPendientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbdListarPendientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -48,5 +303,22 @@ public class Vista extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup BTG;
+    private javax.swing.ButtonGroup btg;
+    private javax.swing.JButton btnRegistro;
+    private javax.swing.JButton btnSalida;
+    private javax.swing.JLabel lblCompleto;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblSistemaTareas;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblid;
+    private javax.swing.JRadioButton rbdListarCompletadas;
+    private javax.swing.JRadioButton rbdListarPendientes;
+    private javax.swing.JRadioButton rbdNO;
+    private javax.swing.JRadioButton rbdNuevaTarea;
+    private javax.swing.JRadioButton rbdSI;
+    private javax.swing.JTextField txtDescripcionTarea;
+    private javax.swing.JTextField txtIdentificador;
+    private javax.swing.JTextField txtTituloTarea;
     // End of variables declaration//GEN-END:variables
 }
