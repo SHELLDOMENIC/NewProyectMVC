@@ -33,4 +33,15 @@ public class NewProyectMvcDom {
         controlador.ejecutar();
     }
     private Scanner scanner;
+
+    public boolean MarcarComoCompletada(int id, GestorTareas gestorTareas) {
+        for (Tarea tarea : gestorTareas.tareas) {
+            if (tarea.getId() == id) {
+                Tarea.<error>();
+                return boolean;
+            } else if ((ERROR)) {
+                return false;
+            }
+        }
+    }
 }       

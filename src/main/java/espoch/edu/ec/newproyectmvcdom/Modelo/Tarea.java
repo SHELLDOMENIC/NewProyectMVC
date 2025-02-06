@@ -18,10 +18,6 @@ public class Tarea {
         this.Completada = Completada;
     }
 
-    public Tarea(int i, String estudiar_Java, String revisar_patrones_de_diseño, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public int getId() {
         return id;
     }
@@ -52,6 +48,9 @@ public class Tarea {
 
     public void setCompletada(boolean Completada) {
         this.Completada = Completada;
+    }
+    public void MarcarComoCompletada() {
+        this.Completada = true;
     }
     @Override
     public String toString() {

@@ -1,31 +1,56 @@
 
 package espoch.edu.ec.newproyectmvcdom.Modelo;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author and_j
  */
 public class GestorTareas {
-    private Tarea tareas;
-    String[] ListTareas = new String[1000];
+    
+    private  List<Tarea> tareas;
+    private int contadorId;
 
-    public GestorTareas(Tarea tareas) {
+    public GestorTareas(List<Tarea> tareas, int contadorId) {
         this.tareas = tareas;
+        this.contadorId = 1;
     }
 
-    public GestorTareas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void AgregarTareas(String titulo, String descripcion){
+        Tarea nuevaTarea = new Tarea(contadorId++, titulo, descripcion);
+        tareas.add(nuevaTarea);
     }
-    public  String AgregarTareas(Tarea tareas){
-    return "";
+    
+  
+    
+    public List<Tarea> ListarTareasPendientes(){
+        List<Tarea> pendientes = new ArrayList();
+        for (Tarea tarea : tareas) {
+            if (!tarea.isCompletada()) {
+                pendientes.add(tarea);
+            }
+        }
+        return pendientes;
     }
-    public String ListarTareasPendientes(){
-    return "";
-    }
-    public String ListarTareasCompletadas(){
-    return "";
-    }
-    public String MarcarComoCompletada(int id){
-    return "";
+   
+   
+     public boolean MarcarComoCompletada(int id) {
+        for (Tarea tarea : tareas) {
+            if (tarea.getId() == id) {
+                tarea.MarcarComoCompletada();
+                return true;
+            }
+        }
+        return false;
     }
 }
+    
+
+
+
+
+
+
