@@ -1,129 +1,140 @@
 
+
 package espoch.edu.ec.newproyectmvcdom.Vista;
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class Vista extends javax.swing.JFrame {
 
-    public class Tarea {
+class Tarea {
     private int id;
     private String titulo;
     private String descripcion;
     private boolean completada;
 
-    public Tarea(int id, String titulo, String descripcion) {
+    public Tarea(int id, String titulo, String descripcion, boolean completada) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.completada = false;
+        this.completada = completada;
     }
 
-    public void marcarCompletada() {
-        this.completada = true;
+    public int getId() {
+        return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
     }
 
     public boolean isCompletada() {
         return completada;
     }
 
+    public void setCompletada(boolean completada) {
+        this.completada = completada;
+    }
+
     @Override
     public String toString() {
-        return "[" + (completada ? "Completada" : "Pendiente") + "] " + titulo + ": " + descripcion;
-    }
-
-    public int getId() {
-        return id;
-    }
-    
-   
-
-public class GestorTareas {
-    private List<Tarea> tareas;
-    private int contadorId;
-
-    public GestorTareas() {
-        tareas = new ArrayList<>();
-        contadorId = 1;
-    }
-
-    public void agregarTarea(String titulo, String descripcion) {
-        Tarea nuevaTarea = new Tarea(contadorId++, titulo, descripcion);
-        tareas.add(nuevaTarea);
-        System.out.println("Tarea agregada con éxito.");
-    }
-
-    public void listarTareasPendientes() {
-        System.out.println("Tareas Pendientes:");
-        for (Tarea tarea : tareas) {
-            if (!tarea.isCompletada()) {
-                System.out.println(tarea);
-            }
-        }
-    }
-
-    public void listarTareasCompletadas() {
-        System.out.println("Tareas Completadas:");
-        for (Tarea tarea : tareas) {
-            if (tarea.isCompletada()) {
-                System.out.println(tarea);
-            }
-        }
-    }
-
-    public void marcarTareaCompletada(int id) {
-        for (Tarea tarea : tareas) {
-            if (tarea.getId() == id) {
-                tarea.marcarCompletada();
-                System.out.println("Tarea marcada como completada.");
-                return;
-            }
-        }
-        System.out.println("Tarea no encontrada.");
+        return "ID: " + id + ", Título: " + titulo + ", Descripción: " + descripcion + ", Completada: " + (completada ? "Sí" : "No");
     }
 }
 
+class VistaTareas {
+    public void mostrarMenu() {
+        System.out.println("\nMenú de Tareas:");
+        System.out.println("1. Agregar nueva tarea");
+        System.out.println("2. Listar tareas pendientes");
+        System.out.println("3. Listar tareas completadas");
+        System.out.println("4. Salir");
+        System.out.print("Seleccione una opción: ");
+    }
 
-public class GestorTareas {
-    public GestorTareas() {
-    GestorTareas gestor = new GestorTareas();
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
+    }
 
-        while (true) {
-            System.out.println("\nMenú:");
-            System.out.println("1. Agregar nueva tarea");
-            System.out.println("2. Listar tareas pendientes");
-            System.out.println("3. Listar tareas completadas");
-            System.out.println("4. Salir");
+    public void mostrarTareas(List<Tarea> tareas) {
+        if (tareas.isEmpty()) {
+            System.out.println("No hay tareas.");
+        } else {
+            for (Tarea tarea : tareas) {
+                System.out.println(tarea);
+            }
+        }
+    }
+}
 
-            System.out.print("Seleccione una opción: ");
-            int opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
+public class SistemaTareas {
+    private List<Tarea> listaTareas;
+    private VistaTareas vista;
+    private int idActual;
+
+    public SistemaTareas() {
+        this.listaTareas = new ArrayList<>();
+        this.vista = new VistaTareas();
+        this.idActual = 1;
+    }
+
+    public void iniciar() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            vista.mostrarMenu();
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // limpiar el buffer
 
             switch (opcion) {
-                case 1:
-                    System.out.print("Ingrese el título de la tarea: ");
-                    String titulo = scanner.nextLine();
-                    System.out.print("Ingrese la descripción de la tarea: ");
-                    String descripcion = scanner.nextLine();
-                    gestor.agregarTarea(titulo, descripcion);
-                    break;
-                case 2:
-                    gestor.listarTareasPendientes();
-                    break;
-                case 3:
-                    gestor.listarTareasCompletadas();
-                    break;
-                case 4:
-                    System.out.println("Saliendo del programa.");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                case 1 -> agregarTarea(scanner);
+                case 2 -> listarTareas(false);
+                case 3 -> listarTareas(true);
+                case 4 -> vista.mostrarMensaje("Saliendo del programa...");
+                default -> vista.mostrarMensaje("Opción no válida.");
             }
+        } while (opcion != 4);
+    }
+
+    private void agregarTarea(Scanner scanner) {
+        System.out.print("Ingrese el título de la tarea: ");
+        String titulo = scanner.nextLine();
+
+        System.out.print("Ingrese la descripción de la tarea: ");
+        String descripcion = scanner.nextLine();
+
+        Tarea nuevaTarea = new Tarea(idActual++, titulo, descripcion, false);
+        listaTareas.add(nuevaTarea);
+
+        vista.mostrarMensaje("Tarea agregada exitosamente.");
+    }
+
+    private void listarTareas(boolean completadas) {
+        List<Tarea> tareasFiltradas = listaTareas.stream()
+                .filter(tarea -> tarea.isCompletada() == completadas)
+                .toList();
+
+        if (completadas) {
+            vista.mostrarMensaje("Tareas Completadas:");
+        } else {
+            vista.mostrarMensaje("Tareas Pendientes:");
         }
+
+        vista.mostrarTareas(tareasFiltradas);
+    }
+
+    public static void main(String[] args) {     
+        SistemaTareas sistema = new SistemaTareas();
+        sistema.iniciar();
     }
 }
-}
+
     
     public Vista() {
         initComponents();
@@ -155,6 +166,9 @@ public class GestorTareas {
         rbdListarCompletadas = new javax.swing.JRadioButton();
         btnRegistro = new javax.swing.JButton();
         btnSalida = new javax.swing.JButton();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        MnEditar = new javax.swing.JMenu();
+        MnEliminar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -206,6 +220,16 @@ public class GestorTareas {
         btnSalida.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         btnSalida.setForeground(new java.awt.Color(102, 0, 0));
         btnSalida.setText("SALIR");
+
+        MnEditar.setText("Editar tarea");
+        MnEditar.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jMenuBar2.add(MnEditar);
+
+        MnEliminar.setText("Eliminar tarea");
+        MnEliminar.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        jMenuBar2.add(MnEliminar);
+
+        setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -287,7 +311,7 @@ public class GestorTareas {
                 .addComponent(btnRegistro)
                 .addGap(27, 27, 27)
                 .addComponent(btnSalida)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -304,9 +328,12 @@ public class GestorTareas {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup BTG;
+    private javax.swing.JMenu MnEditar;
+    private javax.swing.JMenu MnEliminar;
     private javax.swing.ButtonGroup btg;
     private javax.swing.JButton btnRegistro;
     private javax.swing.JButton btnSalida;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JLabel lblCompleto;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblSistemaTareas;
